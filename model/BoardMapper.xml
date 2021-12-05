@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BoardMapper">  
+  <select id="selectBoardList">
+    SELECT id, title, content
+    , insert_user
+    , DATE_FORMAT(insert_date , '%Y-%m-%d %H:%i:%S' ) as insert_date
+    FROM react.board
+    <if test='searchData != null and searchData != ""'>
+    where content  like concat('%',#{searchData} , '%')
+    </if>
+  </select>
+  <insert id="insertBoard">
+    INSERT INTO react.board
+    (id, title, content, insert_user, insert_date)
+    VALUES(
+    concat(DATE_FORMAT(now(), '%Y%m%d'),'ORDER',lpad(nextval('BOARD'),5,0),FLOOR(RAND() * 100))
+    , #{title}
+    , #{content}
+    , #{insert_user}
+    , now());
+  </insert>
+  <update id="updateBoard">
+    UPDATE react.board
+    set title = #{title},
+	  content = #{content}
+    WHERE id = #{id}
+  </update>
+  <delete id="deleteBoard">
+    DELETE from react.board
+    where id = '20211201ORDER0002347'
+  </delete>
+</mapper>
