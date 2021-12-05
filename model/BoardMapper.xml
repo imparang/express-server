@@ -7,7 +7,7 @@
     , DATE_FORMAT(insert_date , '%Y-%m-%d %H:%i:%S' ) as insert_date
     FROM react.board
     <if test='searchData != null and searchData != ""'>
-    where content  like concat('%',#{searchData} , '%')
+    where title  like concat('%',#{searchData} , '%')
     </if>
   </select>
   <insert id="insertBoard">
@@ -28,6 +28,6 @@
   </update>
   <delete id="deleteBoard">
     DELETE from react.board
-    where id = '20211201ORDER0002347'
+    where id = #{id}
   </delete>
 </mapper>
